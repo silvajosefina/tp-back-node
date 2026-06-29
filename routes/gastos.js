@@ -30,5 +30,33 @@ router.get('/:id', (req, res) => {
     res.json(gasto)
 })
 
+router.post('/', (req, res) => {
+    const { descripcion, monto, categoriaId, fecha } = req.body
+
+    if (!descripcion || monto === undefined) {
+        return res.status(400).json({ error: 'descripcion y monto son obligatorios' })
+    }
+
+    if (typeof monto !== 'number' || monto <= 0) {
+        return res.status(400).json({ error: 'monto debe ser un número mayor a 0' })
+    }
+
+    const categoriaExiste = categorias.find(c => c.id === categoriaId)
+    const categoriaFinal = categoriaExiste
+        ? categoriaId
+        : categorias.find(c => c.nombre === 'otro').id
+
+    const nuevoGasto = {
+        id: gastos.length > 0 ? Math.max(...gastos.map(g => g.id)) + 1 : 1,
+        descripcion,
+        monto,
+        categoriaId: categoriaFinal,
+        fecha: fecha || new Date().toISOString().split('T')[0]
+    }
+
+    gastos = gastos.concat(nuevoGasto)
+    res.status(201).json(nuevoGasto)
+})
+
 module.exports = router
 module.exports.gastos = gastos
