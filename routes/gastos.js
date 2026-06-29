@@ -58,6 +58,29 @@ router.post('/', (req, res) => {
     res.status(201).json(nuevoGasto)
 })
 
+router.put('/:id', (req, res) => {
+    const id = Number(req.params.id)
+    const gasto = gastos.find(g => g.id === id)
+    if (!gasto) return res.status(404).json({ error: 'Gasto no encontrado' })
+
+    const { descripcion, monto, categoriaId, fecha } = req.body
+
+    if (monto !== undefined && (typeof monto !== 'number' || monto <= 0)) {
+        return res.status(400).json({ error: 'monto debe ser un número mayor a 0' })
+    }
+
+    const gastoActualizado = {
+        ...gasto,
+        descripcion: descripcion ?? gasto.descripcion,
+        monto: monto ?? gasto.monto,
+        categoriaId: categoriaId ?? gasto.categoriaId,
+        fecha: fecha ?? gasto.fecha
+    }
+
+    gastos = gastos.map(g => g.id === id ? gastoActualizado : g)
+    res.json(gastoActualizado)
+})
+
 router.delete('/:id', (req, res) => {
     const id = Number(req.params.id)
     const gasto = gastos.find(g => g.id === id)
