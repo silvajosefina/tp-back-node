@@ -35,7 +35,9 @@ npm install
 
 2. Crear un archivo `.env` en la raíz con el siguiente contenido:
 
-    PORT=3001
+```bash
+PORT=3001
+```
 
 3. Iniciar el servidor:
 
@@ -58,3 +60,35 @@ npm start
 - **Códigos de estado HTTP**: se respondió con 201 al crear, 204 al eliminar, 400 para errores de validación y 404 cuando no se encuentra un recurso.
 - **Separación de rutas**: la lógica de cada recurso se separó en archivos dentro de la carpeta `routes/`.
 - **Variables de entorno**: se usó `dotenv` para leer el puerto desde un archivo `.env`.
+
+## Capturas de pantalla
+
+**GET /api/gastos**
+![get-gastos](assets/get-gastos.png)
+
+**GET /api/gastos?categoria=comida**
+![get-gastos-filtro](assets/get-gastos-categoria.png)
+
+**GET /api/gastos/:id**
+![get-gastos-id](assets/get-gastos-id.png)
+
+**GET /api/gastos/:id (404)**
+![get-gastos-404](assets/get-gastos-error.png)
+
+**GET /api/gastos/resumen**
+![get-resumen](assets/get-resumen.png)
+
+**GET /api/categorias**
+![get-categorias](assets/get-categorias.png)
+
+**GET /info**
+![get-info](assets/get-informacion.png)
+
+**POST /api/gastos**
+![post-gastos](assets/post-gastos.png)
+
+**PUT /api/gastos/:id**
+![put-gastos](assets/put-gastos.png)
+
+**DELETE /api/gastos/:id**
+![delete-gastos](assets/delete-gastos.png)
