@@ -58,5 +58,14 @@ router.post('/', (req, res) => {
     res.status(201).json(nuevoGasto)
 })
 
+router.delete('/:id', (req, res) => {
+    const id = Number(req.params.id)
+    const gasto = gastos.find(g => g.id === id)
+    if (!gasto) return res.status(404).json({ error: 'Gasto no encontrado' })
+
+    gastos = gastos.filter(g => g.id !== id)
+    res.status(204).end()
+})
+
 module.exports = router
 module.exports.gastos = gastos
